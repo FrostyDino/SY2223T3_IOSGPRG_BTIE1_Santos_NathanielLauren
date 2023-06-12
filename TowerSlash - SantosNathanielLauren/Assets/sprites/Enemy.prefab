@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2526121565343206407}
   - component: {fileID: 2335393678531143052}
   - component: {fileID: 2228402813782597453}
+  - component: {fileID: 8355702503067015169}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -98,12 +99,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3b823f8fb1b749459a7ecf4b0269634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GreenArrowArray:
+  ArrowArray:
   - {fileID: 6249031254610519154, guid: 76baa0f3dfde9a3428f7560e639f68f4, type: 3}
   - {fileID: 1580697666696953640, guid: bc34b9e3a8dcb5241a25230d2c1b4fbc, type: 3}
   - {fileID: 1623818765100142277, guid: 61661823dcf41e14d867db7ea494be5b, type: 3}
+  - {fileID: 5016841336462012619, guid: 018c96a4dc96e6546b3a357f81dfe148, type: 3}
   ArrowType: {fileID: 0}
-  ArroyColor: 
+  ArrowObject: {fileID: 0}
+  ArrowDirection:
+  - Up
+  - Right
+  - Left
+  - Down
+  ChosenArrow: 
+  ChosenColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!61 &2228402813782597453
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -128,5 +137,26 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.22}
   m_EdgeRadius: 0
+--- !u!50 &8355702503067015169
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12328708478107142}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 3
