@@ -2,32 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ammo { PistolAmmo, ShotgunAmmo, ARAmmo };
 public class PickupBaseClass : MonoBehaviour
 {
-    public int type;
+    public ammo AmmoType;
 
-    public PlayerData Player;
+    public Inventory Inventory;
     public void OnPickUp() 
     {
-        if (type == 1) 
+        if (AmmoType == ammo.PistolAmmo) 
         {
-            Player.PistolAmmo += 20;
+            Inventory.PistolAmmo += 20;
         }
-        if (type == 2)
+        if (AmmoType == ammo.ShotgunAmmo)
         {
-            Player.ShotgunAmmo += 10;
+            Inventory.ShotgunAmmo += 10;
         }
-        if (type == 3)
+        if (AmmoType == ammo.ARAmmo)
         {
-            Player.ARAmmo += 50;
+            Inventory.ARAmmo += 50;
         }
-
+        GameManager.Instace.UpdateUI();
         Object.Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Player = collision.gameObject.GetComponent<PlayerData>())
+        if (Inventory = collision.gameObject.GetComponent<Inventory>())
         {
             OnPickUp();
         }
