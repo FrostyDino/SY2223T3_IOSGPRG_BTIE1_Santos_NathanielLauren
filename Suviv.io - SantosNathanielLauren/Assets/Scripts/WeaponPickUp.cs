@@ -2,27 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Gun { Pistol, Shotgun, AR};
 public class WeaponPickUp : MonoBehaviour
 {
-    public Gun WeaponType;
+    public Weapon WeaponType;
+    public int type;
 
     public PlayerData Data;
+    public Inventory BackPack;
     void OnPickUp() 
     {
-        if (WeaponType == Gun.Pistol)
-        { 
-            Debug.Log("Picked up Pistol");
-        }
-        if (WeaponType == Gun.Shotgun)
+        if (WeaponType == Weapon.Pistol)
         {
-            Debug.Log("Picked up Shotgun");
+            Data.CurrentlyEquip = Weapon.Pistol;
         }
-        if (WeaponType == Gun.AR)
+        if (WeaponType == Weapon.Shotgun)
         {
-            Debug.Log("Picked up AR");
+            Data.CurrentlyEquip = Weapon.Shotgun;
+        }
+        if (WeaponType == Weapon.AR)
+        {
+            Data.CurrentlyEquip = Weapon.AR;
         }
 
+        UIManager.Instance.UpdateUI();
         Object.Destroy(this.gameObject);
 
     }
@@ -31,6 +33,7 @@ public class WeaponPickUp : MonoBehaviour
     {
         if (Data = collision.gameObject.GetComponent<PlayerData>())
         {
+            BackPack = collision.gameObject.GetComponent<Inventory>();
             OnPickUp();
         }
     }

@@ -7,4 +7,6 @@ public class Inventory : MonoBehaviour
     public int PistolAmmo;
     public int ShotgunAmmo;
     public int ARAmmo;
+    public GameObject PrimarySlot;
+    public GameObject SecondarySlot;
 }

@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject Player;
     private void Awake()
     {
-        if (Instace != null) Destroy(this);
-        else Instace = this; 
+        
     }
     void Start()
     {
@@ -25,6 +24,6 @@ public class GameManager : MonoBehaviour
 
     public void UpdateUI() 
     {
-        UI.GetComponent<UIManager>().UpdateAmmo();
+     
     }
 }

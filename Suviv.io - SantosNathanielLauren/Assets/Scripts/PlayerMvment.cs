@@ -27,17 +27,10 @@ public class PlayerMvment : MonoBehaviour
     void Update()
     {
         rb.velocity = new Vector2(LeftJoystickScript.Direction.x * MvmentSpeed, LeftJoystickScript.Direction.y * MvmentSpeed);
-
-        Quaternion ToRotate = Quaternion.LookRotation(Vector3.forward, RightJoystickScript.Direction);
-        this.transform.rotation = Quaternion.RotateTowards(transform.rotation, ToRotate, 1);
-        if (AmmoPouch.PistolAmmo > 0) {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                GameObject bullet = Instantiate(BulletPrefab, FiringPoint.transform.position, Quaternion.identity);
-                bullet.GetComponent<Rigidbody2D>().AddForce(FiringPoint.transform.up * 5f, ForceMode2D.Impulse);
-                AmmoPouch.PistolAmmo--;
-                GameManager.Instace.UpdateUI();
-            }
+        
+        if (RightJoystickScript.Direction != new Vector2 (0,0)) {
+            Quaternion ToRotate = Quaternion.LookRotation(Vector3.forward, RightJoystickScript.Direction);
+            this.transform.rotation = Quaternion.RotateTowards(transform.rotation, ToRotate, 1);
         }
     }
 }

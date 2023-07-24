@@ -10,8 +10,8 @@ public class SpawnManager : MonoBehaviour
     {
         for (int i = 0; i < Ammo.Length; i++) 
         {
-            float randX = Random.Range(-10, 10);
-            float randY = Random.Range(-4, 4);
+            float randX = Random.Range(-30, 30);
+            float randY = Random.Range(-24, 24);
             Vector2 RandPosition = new Vector3(randX, randY);
             Instantiate(Ammo[i], RandPosition, Quaternion.identity);
         }

@@ -22,7 +22,7 @@ public class PickupBaseClass : MonoBehaviour
         {
             Inventory.ARAmmo += 50;
         }
-        GameManager.Instace.UpdateUI();
+        UIManager.Instance.UpdateUI();
         Object.Destroy(this.gameObject);
     }
 
