@@ -9,9 +9,8 @@ public enum Weapon
     AR
 };
 
-public enum Ammo
+public enum InventorySlot 
 { 
-    PistolAmmo,
-    ShotgunAmmo,
-    ARAmmo
+    Primary,
+    Secondary
 };

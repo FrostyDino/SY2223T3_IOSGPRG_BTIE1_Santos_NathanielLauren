@@ -12,6 +12,8 @@ public class WeaponBaseClass : MonoBehaviour
     public Inventory Backpack;
     private bool IsReloading;
     public bool ARTrigger;
+    public bool IsFiring;
+    [SerializeField] private float FireRate;
     void Start()
     {
         Backpack = Player.GetComponent<Inventory>();
@@ -31,6 +33,7 @@ public class WeaponBaseClass : MonoBehaviour
             bullet.GetComponent<Rigidbody2D>().AddForce(FiringPoint.transform.up * 5f, ForceMode2D.Impulse);
             AmmoMag--;
             UIManager.Instance.UpdateUI();
+            StartCoroutine(FireRateCoroutine());
         }
         else if(!IsReloading && Backpack.PistolAmmo > 0)
         {
@@ -72,6 +75,7 @@ public class WeaponBaseClass : MonoBehaviour
             }
             AmmoMag--;
             UIManager.Instance.UpdateUI();
+            StartCoroutine(FireRateCoroutine());
         }
         else if (!IsReloading && Backpack.ShotgunAmmo > 0)
         {
@@ -104,4 +108,10 @@ public class WeaponBaseClass : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator FireRateCoroutine() 
+    {
+        IsFiring = true;
+        yield return new WaitForSeconds(FireRate);
+        IsFiring = false;
+    }
 }

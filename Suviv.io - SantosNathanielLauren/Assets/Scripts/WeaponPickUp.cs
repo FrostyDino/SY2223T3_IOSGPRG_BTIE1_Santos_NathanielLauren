@@ -5,27 +5,29 @@ using UnityEngine;
 public class WeaponPickUp : MonoBehaviour
 {
     public Weapon WeaponType;
+    [SerializeField] private InventorySlot slot;
     public int type;
 
     public PlayerData Data;
     public Inventory BackPack;
-    void OnPickUp() 
+    private void OnPickUp() 
     {
-        if (WeaponType == Weapon.Pistol)
-        {
-            Data.CurrentlyEquip = Weapon.Pistol;
-        }
-        if (WeaponType == Weapon.Shotgun)
-        {
-            Data.CurrentlyEquip = Weapon.Shotgun;
-        }
-        if (WeaponType == Weapon.AR)
-        {
-            Data.CurrentlyEquip = Weapon.AR;
-        }
+        BackPack.AddWeapon(slot, WeaponType);
+        //if (WeaponType == Weapon.Pistol)
+        //{
+        //    Data.CurrentlyEquip = Weapon.Pistol;
+        //}
+        //if (WeaponType == Weapon.Shotgun)
+        //{
+        //    Data.CurrentlyEquip = Weapon.Shotgun;
+        //}
+        //if (WeaponType == Weapon.AR)
+        //{
+        //    Data.CurrentlyEquip = Weapon.AR;
+        //}
 
         UIManager.Instance.UpdateUI();
-        Object.Destroy(this.gameObject);
+        Destroy(gameObject);
 
     }
 

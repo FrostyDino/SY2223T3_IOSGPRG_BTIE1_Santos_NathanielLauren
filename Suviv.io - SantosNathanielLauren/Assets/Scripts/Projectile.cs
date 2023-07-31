@@ -8,6 +8,16 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.tag != "Bullet") 
         {
+            if (collision.gameObject.GetComponent<PlayerData>()) 
+            {
+                GameObject Player = collision.gameObject;
+                Player.GetComponent<PlayerData>().Health -= 10;
+                UIManager.Instance.UpdateUI();
+                if (Player.GetComponent<PlayerData>().Health <= 0) 
+                {
+                    Player.GetComponent<PlayerMvment>().PlayerDeath();
+                }
+            }
             Destroy(this.gameObject);
         }
     }

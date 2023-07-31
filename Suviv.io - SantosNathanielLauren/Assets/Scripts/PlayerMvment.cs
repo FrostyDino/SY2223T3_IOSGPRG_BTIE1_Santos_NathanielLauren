@@ -33,4 +33,10 @@ public class PlayerMvment : MonoBehaviour
             this.transform.rotation = Quaternion.RotateTowards(transform.rotation, ToRotate, 1);
         }
     }
+
+    public void PlayerDeath() 
+    {
+        Debug.Log("Player is Dead");
+        Destroy(this.gameObject);
+    }
 }

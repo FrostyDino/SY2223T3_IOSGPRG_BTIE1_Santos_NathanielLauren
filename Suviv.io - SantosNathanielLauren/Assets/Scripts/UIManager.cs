@@ -37,6 +37,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUI()
     {
+        Health.text = "Health: " + Data.Health;
         CurrentlyEquiped.text = "Currently Equiped " + Data.CurrentlyEquip;
         if (Data.CurrentlyEquip == Weapon.Pistol)
         {
