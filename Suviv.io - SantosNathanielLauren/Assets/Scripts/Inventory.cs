@@ -7,7 +7,7 @@ public class Inventory : MonoBehaviour
     public int PistolAmmo;
     public int ShotgunAmmo;
     public int ARAmmo;
-    [SerializeField] private List<int> ammos;
+    [SerializeField] public List<int> ammos;
     public InventorySlot currentlyEquipped;
     [SerializeField] private List<WeaponBaseClass> weapons;
     [SerializeField] private GameObject player;
@@ -18,6 +18,10 @@ public class Inventory : MonoBehaviour
         ammos[(int)weaponType] += ammount;
     }
 
+    public void RemoveAmmo(Weapon weaponType,  int amount) 
+    {
+        ammos[(int)weaponType] -= amount;
+    }
     public void AddWeapon(InventorySlot slot, Weapon weapon) 
     {
         if (weapons[(int)slot]) 
@@ -30,6 +34,7 @@ public class Inventory : MonoBehaviour
             if (i == (int)weapon) 
             {
                 player.transform.GetChild(i).gameObject.SetActive(true);
+                player.GetComponent<PlayerData>().CurrentlyEquip = weapon;
             }
         }
 

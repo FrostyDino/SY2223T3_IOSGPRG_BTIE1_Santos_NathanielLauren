@@ -18,7 +18,22 @@ public class Projectile : MonoBehaviour
                     Player.GetComponent<PlayerMvment>().PlayerDeath();
                 }
             }
+            if (collision.gameObject.GetComponent<EnemyBaseClass>())
+            {
+                GameObject npc = collision.gameObject;
+                npc.GetComponent<EnemyBaseClass>().HP -= 10;
+                UIManager.Instance.UpdateUI();
+                if (npc.GetComponent<EnemyBaseClass>().HP <= 0)
+                {
+                    npc.GetComponent<EnemyBaseClass>().Death();
+                }
+            }
+            else Physics2D.IgnoreCollision(this.GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>());
             Destroy(this.gameObject);
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        
     }
 }

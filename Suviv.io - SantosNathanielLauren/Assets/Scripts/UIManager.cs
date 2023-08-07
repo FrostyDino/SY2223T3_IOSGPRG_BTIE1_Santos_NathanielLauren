@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -8,12 +9,19 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     public GameObject Player;
     public PlayerData Data;
-    public Inventory Inventory;
-    public TextMeshProUGUI Health;
-    public TextMeshProUGUI CurrentlyEquiped;
+    public Inventory inventory;
+    public Slider Health;
+    public TextMeshProUGUI ammoMag;
+    public TextMeshProUGUI ammoCapacity;
     public GameObject Pistol;
     public GameObject AR;
     public GameObject Shotgun;
+    public TextMeshProUGUI invetoryPistolAmmo;
+    public TextMeshProUGUI invetoryARAmmo;
+    public TextMeshProUGUI invetoryShotgunAmmo;
+    public Image ReloadBG;
+    public TextMeshProUGUI ReloadText;
+    public TextMeshProUGUI HuntersLeftAliveText;
 
     private void Awake()
     {
@@ -23,10 +31,10 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         Data = Player.GetComponent<PlayerData>();
-        Inventory = Player.GetComponent<Inventory>();
-        Health.text = "Health: " + Data.Health;
-        CurrentlyEquiped.text = "Currently Equiped " + Data.CurrentlyEquip;
+        inventory = Player.GetComponent<Inventory>();
+        Health.maxValue = Data.Health;
         UpdateUI();
+
     }
 
     // Update is called once per frame
@@ -37,20 +45,29 @@ public class UIManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        Health.text = "Health: " + Data.Health;
-        CurrentlyEquiped.text = "Currently Equiped " + Data.CurrentlyEquip;
+        Health.value = Data.Health;
+        ammoMag.text = "Currently Equiped " + Data.CurrentlyEquip;
         if (Data.CurrentlyEquip == Weapon.Pistol)
         {
-            CurrentlyEquiped.text = Data.CurrentlyEquip + ": "+ Pistol.GetComponent<WeaponBaseClass>().AmmoMag +"/" + Inventory.PistolAmmo;
-        }
-        if (Data.CurrentlyEquip == Weapon.AR)
-        {
-            CurrentlyEquiped.text = Data.CurrentlyEquip + ": " + AR.GetComponent<WeaponBaseClass>().AmmoMag + "/" + Inventory.ARAmmo;
+            ammoMag.text = "" + Pistol.GetComponent<WeaponBaseClass>().AmmoMag;
+            ammoCapacity.text = "" + inventory.ammos[0];
         }
         if (Data.CurrentlyEquip == Weapon.Shotgun)
         {
-            CurrentlyEquiped.text = Data.CurrentlyEquip + ": "+ Shotgun.GetComponent<WeaponBaseClass>().AmmoMag +"/" + Inventory.ShotgunAmmo;
+            ammoMag.text = "" + Shotgun.GetComponent<WeaponBaseClass>().AmmoMag;
+            ammoCapacity.text = "" + inventory.ammos[1];
         }
+        if (Data.CurrentlyEquip == Weapon.AR)
+        {
+            ammoMag.text = "" + AR.GetComponent<WeaponBaseClass>().AmmoMag;
+            ammoCapacity.text = "" + inventory.ammos[2];
+        }
+        
+        invetoryPistolAmmo.text = ""+ inventory.ammos[0];
+        invetoryShotgunAmmo.text = "" + inventory.ammos[1];
+        invetoryARAmmo.text = "" + inventory.ammos[2];
+        HuntersLeftAliveText.text = "" + GameManager.Instance.EnemyAmount;
+        
     }
 
     public void ShootButton()

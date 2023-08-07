@@ -1,29 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static GameManager Instace;
-
-    public Canvas UI;
-    public PlayerData Data;
-    public GameObject Player;
+    public static GameManager Instance;
+    public int EnemyAmount;
     private void Awake()
     {
-        
-    }
-    void Start()
-    {
-        Data = Player.GetComponent<PlayerData>();
-    }
-    void Update()
-    {   
+        if (Instance != null) Destroy(this);
+        else Instance = this;
     }
 
-    public void UpdateUI() 
+    public void WinGame()
     {
-     
+        SceneManager.LoadScene(3);
     }
 }

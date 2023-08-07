@@ -42,9 +42,10 @@ GameObject:
   - component: {fileID: 3480607619713069142}
   - component: {fileID: 5177491943580320340}
   - component: {fileID: 7510813695489446255}
-  - component: {fileID: 7561767948984753278}
   - component: {fileID: 92205980080709681}
+  - component: {fileID: 7561767948984753278}
   - component: {fileID: 4279193188402811243}
+  - component: {fileID: 2317135154291677123}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -140,23 +141,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &7561767948984753278
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6286735890969549697}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 7
+  m_Constraints: 4
 --- !u!58 &92205980080709681
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -173,6 +158,22 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!58 &7561767948984753278
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6286735890969549697}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 7
 --- !u!114 &4279193188402811243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,3 +196,23 @@ MonoBehaviour:
   GunSpawnLocation: {fileID: 233686601718205041}
   movementSpeed: 5
   currentState: 0
+  HP: 0
+--- !u!114 &2317135154291677123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6286735890969549697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4906d4183fcceac45876f2d22997d6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PistolAmmo: 0
+  ShotgunAmmo: 0
+  ARAmmo: 0
+  ammos: 000000000000000000000000
+  currentlyEquipped: 0
+  weapons: []
+  player: {fileID: 0}

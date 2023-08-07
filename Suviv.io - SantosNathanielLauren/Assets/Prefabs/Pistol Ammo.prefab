@@ -146,5 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370a3240ba4fb50438a0ae85f8451657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmmoType: 0
-  Inventory: {fileID: 0}
+  weaponType: 0
+  ammoMinMax: {x: 1, y: 9}
+  inventory: {fileID: 0}

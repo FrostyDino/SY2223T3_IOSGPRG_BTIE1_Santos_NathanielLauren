@@ -104,7 +104,10 @@ MonoBehaviour:
   FiringPoint: {fileID: 7592563254016585148}
   Player: {fileID: 0}
   Backpack: {fileID: 0}
+  IsReloading: 0
   ARTrigger: 0
+  IsFiring: 0
+  FireRate: 0.25
 --- !u!1 &7592563254016585148
 GameObject:
   m_ObjectHideFlags: 0

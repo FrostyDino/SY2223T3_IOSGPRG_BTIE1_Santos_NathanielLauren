@@ -99,8 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370a3240ba4fb50438a0ae85f8451657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmmoType: 2
-  Inventory: {fileID: 0}
+  weaponType: 2
+  ammoMinMax: {x: 5, y: 16}
+  inventory: {fileID: 0}
 --- !u!61 &213668054383741762
 BoxCollider2D:
   m_ObjectHideFlags: 0

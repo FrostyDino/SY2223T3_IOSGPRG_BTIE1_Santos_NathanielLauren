@@ -13,19 +13,6 @@ public class WeaponPickUp : MonoBehaviour
     private void OnPickUp() 
     {
         BackPack.AddWeapon(slot, WeaponType);
-        //if (WeaponType == Weapon.Pistol)
-        //{
-        //    Data.CurrentlyEquip = Weapon.Pistol;
-        //}
-        //if (WeaponType == Weapon.Shotgun)
-        //{
-        //    Data.CurrentlyEquip = Weapon.Shotgun;
-        //}
-        //if (WeaponType == Weapon.AR)
-        //{
-        //    Data.CurrentlyEquip = Weapon.AR;
-        //}
-
         UIManager.Instance.UpdateUI();
         Destroy(gameObject);
 

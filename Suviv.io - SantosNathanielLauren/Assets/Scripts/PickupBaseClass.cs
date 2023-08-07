@@ -16,10 +16,14 @@ public class PickupBaseClass : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (inventory = collision.gameObject.GetComponent<Inventory>())
+        if (collision.GetComponent<PlayerMvment>()) 
         {
-            OnPickUp();
+            if (inventory = collision.gameObject.GetComponent<Inventory>())
+            {
+                OnPickUp();
+            }
         }
+        
     }
 
 }

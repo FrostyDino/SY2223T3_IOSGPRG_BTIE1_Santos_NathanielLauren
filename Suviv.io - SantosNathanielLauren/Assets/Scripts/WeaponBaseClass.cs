@@ -10,13 +10,13 @@ public class WeaponBaseClass : MonoBehaviour
     public GameObject FiringPoint;
     public GameObject Player;
     public Inventory Backpack;
-    private bool IsReloading;
+    [SerializeField] private bool IsReloading;
     public bool ARTrigger;
     public bool IsFiring;
     [SerializeField] private float FireRate;
     void Start()
     {
-        Backpack = Player.GetComponent<Inventory>();
+        Backpack = GetComponentInParent<Inventory>();
     }
 
     // Update is called once per frame
@@ -35,11 +35,20 @@ public class WeaponBaseClass : MonoBehaviour
             UIManager.Instance.UpdateUI();
             StartCoroutine(FireRateCoroutine());
         }
-        else if(!IsReloading && Backpack.PistolAmmo > 0)
+        else if(!IsReloading && Backpack.ammos[(int)WeaponType] > 0)
         {
             StartCoroutine(Reload());
-            Backpack.PistolAmmo -= 9;
-            AmmoMag += 9;
+            if (Backpack.ammos[(int)WeaponType] >= 15)
+            {
+                Backpack.RemoveAmmo(WeaponType, 15);
+                AmmoMag += 15;
+            }
+            else 
+            {
+                AmmoMag += Backpack.ammos[(int)WeaponType];
+                Backpack.RemoveAmmo(WeaponType, Backpack.ammos[(int)WeaponType]);
+            }
+            
         }
 
     }
@@ -49,12 +58,21 @@ public class WeaponBaseClass : MonoBehaviour
             {
             StartCoroutine(ARShooting());
             }
-            else if (!IsReloading && Backpack.ARAmmo > 0)
+            else if (!IsReloading && Backpack.ammos[(int)WeaponType] > 0)
             {
-                StartCoroutine(Reload());
-                Backpack.PistolAmmo -= 50;
-                AmmoMag += 50;
+            StartCoroutine(Reload());
+            if (Backpack.ammos[(int)WeaponType] >= 30)
+            {
+                Backpack.RemoveAmmo(WeaponType, 30);
+                AmmoMag += 30;
             }
+            else
+            {
+                AmmoMag += Backpack.ammos[(int)WeaponType];
+                Backpack.RemoveAmmo(WeaponType, Backpack.ammos[(int)WeaponType]);
+            }
+
+        }
 
     }
     public void ShotgunShoot()
@@ -77,11 +95,20 @@ public class WeaponBaseClass : MonoBehaviour
             UIManager.Instance.UpdateUI();
             StartCoroutine(FireRateCoroutine());
         }
-        else if (!IsReloading && Backpack.ShotgunAmmo > 0)
+        else if (!IsReloading && Backpack.ammos[(int)WeaponType] > 0)
         {
             StartCoroutine(Reload());
-            Backpack.ShotgunAmmo -= 2;
-            AmmoMag += 2;
+            if (Backpack.ammos[(int)WeaponType] >= 2)
+            {
+                Backpack.RemoveAmmo(WeaponType, 2);
+                AmmoMag += 2;
+            }
+            else
+            {
+                AmmoMag += Backpack.ammos[(int)WeaponType];
+                Backpack.RemoveAmmo(WeaponType, Backpack.ammos[(int)WeaponType]);
+            }
+
         }
 
     }
@@ -89,21 +116,27 @@ public class WeaponBaseClass : MonoBehaviour
     IEnumerator Reload() 
     {
         IsReloading = true;
-        UIManager.Instance.CurrentlyEquiped.text = "Reloading...";
+        if (this.gameObject.GetComponentInParent<PlayerMvment>()) 
+        {
+            UIManager.Instance.ReloadText.gameObject.SetActive(true);
+            UIManager.Instance.ReloadBG.gameObject.SetActive(true);
+        }
         yield return new WaitForSeconds(2f);
         IsReloading = false;
         UIManager.Instance.UpdateUI();
+        UIManager.Instance.ReloadText.gameObject.SetActive(false);
+        UIManager.Instance.ReloadBG.gameObject.SetActive(false);
     }
 
     IEnumerator ARShooting() 
     {
-        while (ARTrigger) 
+        while (ARTrigger && AmmoMag > 0) 
         {
             GameObject bullet = Instantiate(BulletPrefab, FiringPoint.transform.position, Quaternion.identity);
             bullet.GetComponent<Rigidbody2D>().AddForce(FiringPoint.transform.up * 5f, ForceMode2D.Impulse);
             AmmoMag--;
             UIManager.Instance.UpdateUI();
-            yield return new WaitForSeconds(0.25f);
+            yield return StartCoroutine(FireRateCoroutine());
         }
         yield return null;
     }

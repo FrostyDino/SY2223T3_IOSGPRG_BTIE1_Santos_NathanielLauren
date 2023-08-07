@@ -20,14 +20,18 @@ public class EnemyBaseClass : MonoBehaviour
     public float movementSpeed;
     public EnemyState currentState;
     private Vector2 WonderDestination;
+    private bool WalkFinished;
+    public int HP;
     void Start()
     {
         RandomizedWonderPoint();
-        int RandomGun = Random.Range(0, GunPrefabs.Length - 1);
+        int RandomGun = Random.Range(0, GunPrefabs.Length);
         CurrentGun = Instantiate(GunPrefabs[RandomGun], GunSpawnLocation.transform.position, Quaternion.identity);
         CurrentGun.transform.parent = transform;
         GunWeaponType = CurrentGun.GetComponent<WeaponBaseClass>().WeaponType;
-        CurrentGun.GetComponent<WeaponBaseClass>().AmmoMag = 999;
+        CurrentGun.GetComponent<WeaponBaseClass>().Backpack = this.gameObject.GetComponent<Inventory>();
+        this.gameObject.GetComponent<Inventory>().AddAmmo(GunWeaponType, 50);
+        HP = 100;
     }
 
     // Update is called once per frame
@@ -52,9 +56,12 @@ public class EnemyBaseClass : MonoBehaviour
         transform.up = new Vector3(WonderDestination.x, WonderDestination.y, transform.position.z) - transform.position;
         transform.position = Vector2.MoveTowards(transform.position, WonderDestination, movementSpeed * Time.deltaTime);
 
-        if (transform.position == new Vector3 (WonderDestination.x, WonderDestination.y, transform.position.z)) 
+        
+        if (transform.position == new Vector3(WonderDestination.x, WonderDestination.y, transform.position.z) || WalkFinished) 
         {
             RandomizedWonderPoint();
+            WalkFinished = false;
+
         }
     }
 
@@ -62,13 +69,24 @@ public class EnemyBaseClass : MonoBehaviour
     {
         if (collision.GetComponent<PlayerData>() || collision.GetComponent<EnemyBaseClass>()) 
         {
-            EntityList.Add(collision.gameObject);
+            if (!EntityList.Contains(collision.gameObject)) 
+            {
+                EntityList.Add(collision.gameObject);
+            }
             currentState = EnemyState.Chasing;
         }
     }
 
     private void SeekEntity() 
     {
+        if (EntityList[0] == null)
+        {
+            EntityList.RemoveAt(0);
+            if (EntityList.Count == 0)
+            {
+                currentState = EnemyState.Wondering;
+            }
+        }
         transform.position = Vector2.MoveTowards(transform.position, EntityList[0].transform.position, movementSpeed * Time.deltaTime);
         float dis = Vector3.Distance(transform.position, EntityList[0].transform.position);
 
@@ -83,6 +101,17 @@ public class EnemyBaseClass : MonoBehaviour
 
     private void ShootEntity() 
     {
+        if (EntityList[0] == null)
+        {
+            EntityList.RemoveAt(0);
+            if (EntityList.Count == 0) 
+            {
+                currentState = EnemyState.Wondering;
+            }
+            else currentState = EnemyState.Chasing;
+            CurrentGun.GetComponent<WeaponBaseClass>().ARTrigger = false;
+        }
+
         transform.up = EntityList[0].transform.position - transform.position;
         float dis = Vector3.Distance(transform.position, EntityList[0].transform.position);
         if (CurrentGun.GetComponent<WeaponBaseClass>().IsFiring == false) {
@@ -93,7 +122,6 @@ public class EnemyBaseClass : MonoBehaviour
             else if (GunWeaponType == Weapon.AR)
             {
                 CurrentGun.GetComponent<WeaponBaseClass>().ARTrigger = true;
-                CurrentGun.GetComponent<WeaponBaseClass>().IsFiring = true;
                 CurrentGun.GetComponent<WeaponBaseClass>().ARShoot();
             }
             else if (GunWeaponType == Weapon.Shotgun)
@@ -101,17 +129,33 @@ public class EnemyBaseClass : MonoBehaviour
                 CurrentGun.GetComponent<WeaponBaseClass>().ShotgunShoot();
             }
         }
-
         if (dis >= 5)
         {
             Debug.Log("Entity Went Outside of Range");
             currentState = EnemyState.Chasing;
+            CurrentGun.GetComponent<WeaponBaseClass>().ARTrigger = false;
         }
     }
 
     private void RandomizedWonderPoint() 
     {
         WonderDestination =  Random.insideUnitCircle * 5 + new Vector2(transform.position.x, transform.position.y);
-        
+        StartCoroutine(WalkTimer());
+    }
+
+    private IEnumerator WalkTimer() 
+    {
+        yield return new WaitForSeconds(2f);
+        WalkFinished = true;
+    }
+
+    public void Death() 
+    {
+        GameManager.Instance.EnemyAmount--;
+        if (GameManager.Instance.EnemyAmount <=1) 
+        {
+            GameManager.Instance.WinGame();
+        }
+        Destroy(this.gameObject);
     }
 }

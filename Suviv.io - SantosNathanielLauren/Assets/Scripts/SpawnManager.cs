@@ -6,21 +6,37 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject[] Ammo;
     public GameObject[] Weapons;
+    public GameObject Enemy;
+    [SerializeField] private int enemyAmount;
+    [SerializeField] private int LootablesAmmount;
+    private int LootableSpawned;
     void Start()
     {
-        for (int i = 0; i < Ammo.Length; i++) 
+        while (LootableSpawned != LootablesAmmount) 
+        {
+            float rand = Random.Range(0, 101);
+            float randX = Random.Range(-30, 30);
+            float randY = Random.Range(-24, 24);
+            Vector2 RandPosition = new Vector3(randX, randY);
+            if (rand <= 70)
+            {
+                Instantiate(Ammo[(int)Random.Range(0, Ammo.Length)], RandPosition, Quaternion.identity);
+                LootableSpawned++;
+            }
+            else
+            {
+                Instantiate(Weapons[(int)Random.Range(0, Weapons.Length)], RandPosition, Quaternion.identity);
+                LootableSpawned++;
+            }
+        }
+        for (int i = 0; i < enemyAmount; i++) 
         {
             float randX = Random.Range(-30, 30);
             float randY = Random.Range(-24, 24);
             Vector2 RandPosition = new Vector3(randX, randY);
-            Instantiate(Ammo[i], RandPosition, Quaternion.identity);
-        }
-        for (int i = 0; i < Weapons.Length; i++)
-        {
-            float randX = Random.Range(-10, 10);
-            float randY = Random.Range(-4, 4);
-            Vector2 RandPosition = new Vector3(randX, randY);
-            Instantiate(Weapons[i], RandPosition, Quaternion.identity);
+            Instantiate(Enemy, RandPosition, Quaternion.identity);
+            GameManager.Instance.EnemyAmount++;
+            UIManager.Instance.UpdateUI();
         }
     }
 

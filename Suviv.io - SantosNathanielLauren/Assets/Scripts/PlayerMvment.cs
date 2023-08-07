@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMvment : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class PlayerMvment : MonoBehaviour
         Data = this.GetComponent<PlayerData>();
         LeftJoystickScript = LeftJoystick.GetComponent<FixedJoystick>();
         RightJoystickScript = RightJoystick.GetComponent<FixedJoystick>();
+        GameManager.Instance.EnemyAmount++;
     }
 
     // Update is called once per frame
@@ -36,7 +38,6 @@ public class PlayerMvment : MonoBehaviour
 
     public void PlayerDeath() 
     {
-        Debug.Log("Player is Dead");
-        Destroy(this.gameObject);
+        SceneManager.LoadScene(2);
     }
 }
